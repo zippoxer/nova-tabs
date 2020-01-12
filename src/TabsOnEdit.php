@@ -1,4 +1,5 @@
 <?php
+
 namespace Eminiarts\Tabs;
 
 use Laravel\Nova\Fields\FieldCollection as NovaFieldCollection;
@@ -78,10 +79,10 @@ trait TabsOnEdit
     public static function rulesForCreation(NovaRequest $request)
     {
         return static::formatRules($request, (new static(static::newModel()))
-                ->parentCreationFields($request)
-                ->mapWithKeys(function ($field) use ($request) {
-                    return $field->getCreationRules($request);
-                })->all());
+            ->parentCreationFields($request)
+            ->mapWithKeys(function ($field) use ($request) {
+                return $field->getCreationRules($request);
+            })->all());
     }
 
     /**
@@ -90,20 +91,20 @@ trait TabsOnEdit
      * @param  \Laravel\Nova\Http\Requests\NovaRequest $request
      * @return array
      */
-    public static function rulesForUpdate(NovaRequest $request)
+    public static function rulesForUpdate(NovaRequest $request, $resource = null)
     {
         return static::formatRules($request, (new static(static::newModel()))
-                ->parentUpdateFields($request)
-                ->mapWithKeys(function ($field) use ($request) {
-                    return $field->getUpdateRules($request);
-                })->all());
+            ->parentUpdateFields($request)
+            ->mapWithKeys(function ($field) use ($request) {
+                return $field->getUpdateRules($request);
+            })->all());
     }
 
     /**
      * Resolve the update fields.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest $request
-     * @return \Illuminate\Support\Collection
+     * @return \Laravel\Nova\Fields\FieldCollection
      */
     public function updateFields(NovaRequest $request)
     {
@@ -121,8 +122,8 @@ trait TabsOnEdit
     /**
      * Assign the fields with the given panels to their parent panel.
      *
-     * @param string                               $label
-     * @param \Laravel\Nova\Fields\FieldCollection $panels
+     * @param  string  $label
+     * @param  \Laravel\Nova\Fields\FieldCollection  $fields
      * @return \Laravel\Nova\Fields\FieldCollection
      */
     protected function assignToPanels($label, NovaFieldCollection $panels)
